@@ -11,8 +11,8 @@ const ContactSection: React.FC = () => {
             Have a question or need a ride? I am just a message away.
           </h1>
           <p className="text-gray-700 mb-6 text-lg sm:text-xl">
-            Whether you're planning ahead or need a quick pickup, feel free to
-            reach out. I’ll respond as soon as possible.
+            Whether you&apos;re planning ahead or need a quick pickup, feel free
+            to reach out. I&apos;ll respond as soon as possible.
           </p>
           <h2 className="text-2xl font-bold mb-4">My Contacts</h2>
           <div className="flex items-center mb-3">

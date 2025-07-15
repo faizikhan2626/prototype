@@ -40,7 +40,7 @@ const AboutMeSection: React.FC = () => {
           </p>
 
           <p className="text-gray-700 text-base sm:text-lg lg:text-2xl">
-            Let’s ride safely, comfortably, and right on time.
+            Let&apos;s ride safely, comfortably, and right on time.
           </p>
 
           {/* Buttons */}

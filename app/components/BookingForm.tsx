@@ -4,7 +4,6 @@ import {
   LocationIcon,
   PhoneIcon,
   PersonIcon,
-  ArrowIcon,
   DirectionIcon,
   CalendarIcon,
 } from "./icons/page";
@@ -39,7 +38,7 @@ const BookingForm: NextPage = () => {
 
           {/* Mobile Discount Banner */}
           <div className="md:hidden bg-blue-900 text-white font-semibold text-center py-2 rounded-t-xl mb-4">
-            20% Discount – Always Available
+            20% Discount Always Available
           </div>
 
           <h2 className="text-2xl font-bold mb-6">Book Your Ride</h2>
@@ -95,34 +94,36 @@ const BookingForm: NextPage = () => {
             </div>
 
             {/* Date, Passengers, and Button - Responsive */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-              {/* Date & Time */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-800 mb-1">
-                  Date & Time
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    className="p-3 pr-12 font-medium border border-gray-300 rounded-xl w-full"
-                    placeholder="e.g., 10 July, 9:00 AM"
-                  />
-                  <CalendarIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
+            <div className="grid grid-cols-1 md:flex md:justify-between gap-4 items-end">
+              <div className="flex md:w-1/2">
+                {/* Date & Time */}
+                <div className="pr-1">
+                  <label className="block text-sm font-semibold text-gray-800 mb-1">
+                    Date & Time
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      className="p-3 pr-12 font-medium border border-gray-300 rounded-xl w-full"
+                      placeholder="e.g., 10 July, 9:00 AM"
+                    />
+                    <CalendarIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
+                  </div>
                 </div>
-              </div>
 
-              {/* Passengers */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-800 mb-1">
-                  Passengers
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="3"
-                    className="p-3 font-medium border border-gray-300 rounded-xl w-full"
-                  />
-                  <PersonIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
+                {/* Passengers */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-800 mb-1">
+                    Passengers
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="3"
+                      className="p-3 font-medium border border-gray-300 rounded-xl w-full"
+                    />
+                    <PersonIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
+                  </div>
                 </div>
               </div>
 
