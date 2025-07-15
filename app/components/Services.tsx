@@ -1,4 +1,4 @@
-import { AirportIcon, LocalIcon, NightIcon, ScheduleIcon } from "./icons/page";
+import { AirportIcon, LocalIcon, NightIcon, ScheduleIcon } from "./icons/icon";
 
 const ServicesOffered = () => {
   return (

@@ -6,7 +6,7 @@ import {
   PersonIcon,
   DirectionIcon,
   CalendarIcon,
-} from "./icons/page";
+} from "./icons/icon";
 
 const BookingForm: NextPage = () => {
   return (

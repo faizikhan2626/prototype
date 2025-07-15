@@ -2,14 +2,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { HamburgerIcon, CloseIcon } from "./icons/page";
+import { HamburgerIcon, CloseIcon } from "./icons/icon";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <nav className="relative bg-white shadow-sm py-4 px-6 w-full z-50">
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between font-bold text-lg relative">
+      <div className="max-w-screen mx-auto flex items-center justify-between font-bold text-lg relative">
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/">

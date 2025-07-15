@@ -1,5 +1,5 @@
 import React from "react";
-import { EmailIcon, PhoneIcon } from "./icons/page";
+import { EmailIcon, PhoneIcon } from "./icons/icon";
 
 const ContactSection: React.FC = () => {
   return (
