@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { HamburgerIcon, CloseIcon } from "./icons/icon";
+import { HamburgerIcon, CloseIcon } from "../../icons/icon";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
