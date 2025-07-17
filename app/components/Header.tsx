@@ -1,9 +1,50 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const HeroSection = () => {
+export default function HeroSection() {
+  const [profile, setProfile] = useState<{ name: string } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch("/api/profile");
+        if (response.ok) {
+          const data = await response.json();
+          console.log("HeroSection Profile API response:", data); // Debug log
+          setProfile({ name: data.name || "No name available" });
+        } else {
+          console.error(
+            "Profile API error:",
+            response.status,
+            response.statusText
+          );
+          setError("Failed to fetch profile data");
+        }
+      } catch (error) {
+        console.error("Fetch profile error:", error);
+        setError("Error fetching profile data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500">{error}</div>;
+  }
+
   return (
-    <div className="">
+    <div>
       {/* Hero Section with Background Image */}
       <div className="relative flex justify-center items-center overflow-hidden pt-10 min-h-[450px] sm:min-h-[500px] md:min-h-[550px] lg:min-h-[600px]">
         {/* Background Image */}
@@ -19,11 +60,11 @@ const HeroSection = () => {
 
         {/* Content Container */}
         <div className="items-center justify-center text-center px-6 md:px-12 lg:px-24 z-10">
-          <button className=" text-white px-6 py-1 rounded-full font-medium text-xs transition-colors flex items-center mx-auto mb-6 border-2 border-white">
-            Nurul Kaiser
+          <button className="text-white px-6 py-1 rounded-full font-medium text-xs transition-colors flex items-center mx-auto mb-6 border-2 border-white">
+            {profile?.name || "Nurul Kaiser"}
           </button>
 
-          <h1 className="text-2xl text-white  md:text-4xl lg:text-4xl font-bold mb-6 leading-tight">
+          <h1 className="text-2xl text-white md:text-4xl lg:text-4xl font-bold mb-6 leading-tight">
             On-Time Rides You Can Rely On
           </h1>
 
@@ -33,7 +74,8 @@ const HeroSection = () => {
             and more. Fast, friendly, and always on time.
           </p>
           <p className="text-sm text-white md:text-lg mb-5 max-w-6xl mx-auto">
-            Enjoy 20% off with Nurul Kaiser Taxi & Limousine Service – Zurichs
+            Enjoy 20% off with {profile?.name || "Nurul Kaiser"}&apos;s Taxi &
+            Limousine Service – {profile?.name || "Nurul Kaiser"}&apos;s
             reliable ride, always
           </p>
 
@@ -59,6 +101,4 @@ const HeroSection = () => {
       </div>
     </div>
   );
-};
-
-export default HeroSection;
+}

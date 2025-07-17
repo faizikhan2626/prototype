@@ -1,7 +1,55 @@
-import React from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const AboutMeSection: React.FC = () => {
+export default function AboutMeSection() {
+  const [profile, setProfile] = useState<{
+    name: string;
+    bio: string;
+    picture: string;
+  } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch("/api/profile");
+        if (response.ok) {
+          const data = await response.json();
+          console.log("AboutMeSection Profile API response:", data); // Debug log
+          setProfile({
+            name: data.name || "No name available",
+            bio: data.bio || "No bio available",
+            picture: data.picture || "/profile.jpg",
+          });
+        } else {
+          console.error(
+            "Profile API error:",
+            response.status,
+            response.statusText
+          );
+          setError("Failed to fetch profile data");
+        }
+      } catch (error) {
+        console.error("Fetch profile error:", error);
+        setError("Error fetching profile data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500">{error}</div>;
+  }
+
   return (
     <div className="relative pb-1">
       {/* Racing Flag Background positioned at bottom and extended downward */}
@@ -19,26 +67,27 @@ const AboutMeSection: React.FC = () => {
           </h2>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug">
-            Hi, I am Nurul Kaiser,
+            Hi, I am {profile?.name || "Nurul Kaiser"},
           </h1>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-snug">
             your trusted driver
           </h1>
 
           <p className="text-gray-700 text-base sm:text-lg lg:text-2xl">
+            {profile?.bio || "No bio available"}
+          </p>
+          <p className="text-gray-700 text-base sm:text-lg lg:text-2xl">
             I offer safe, comfortable, and reliable transportation across Swiss
             cities and towns. Whether you need a quick ride across town, a
             transfer to the airport, or a scheduled trip, I am here to make sure
             you get to your destination on time.
           </p>
-
           <p className="text-gray-700 text-base sm:text-lg lg:text-2xl">
             With a focus on punctuality, professionalism, and friendly service,
-            I aim to make every journey smooth and stressfree. I speak English
-            and [insert other language(s) if needed], and I know the roads
-            well—so you are always in good hands.
+            I aim to make every journey smooth and stress-free. I speak{" "}
+            {profile?.languages || "English"} and know the roads well—so you are
+            always in good hands.
           </p>
-
           <p className="text-gray-700 text-base sm:text-lg lg:text-2xl">
             Let&apos;s ride safely, comfortably, and right on time.
           </p>
@@ -77,17 +126,15 @@ const AboutMeSection: React.FC = () => {
 
         {/* Right Side - Big Picture */}
         <div className="w-full md:w-1/2">
-          <img
+          <Image
+            src={profile?.picture || "/profile.jpg"}
+            alt={profile?.name || "Nurul Kaiser"}
             width={500}
             height={500}
-            src="/profile.jpg"
-            alt="Nurul Kaiser"
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="w-full h-full rounded-lg shadow-lg"
           />
         </div>
       </div>
     </div>
   );
-};
-
-export default AboutMeSection;
+}

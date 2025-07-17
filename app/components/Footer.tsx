@@ -36,6 +36,12 @@ const Footer: React.FC = () => {
           >
             Services
           </Link>
+          <Link
+            href="/login"
+            className="text-gray-800 text-base font-medium hover:underline"
+          >
+            Login
+          </Link>
         </div>
       </div>
     </footer>

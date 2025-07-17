@@ -1,4 +1,6 @@
-import { NextPage } from "next";
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   LocationIcon,
@@ -8,7 +10,51 @@ import {
   CalendarIcon,
 } from "../../icons/icon";
 
-const BookingForm: NextPage = () => {
+export default function BookingForm() {
+  const [profile, setProfile] = useState<{
+    name: string;
+    phone: string;
+  } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch("/api/profile");
+        if (response.ok) {
+          const data = await response.json();
+          console.log("BookingForm Profile API response:", data); // Debug log
+          setProfile({
+            name: data.name || "No name available",
+            phone: data.phone || "+41768225204",
+          });
+        } else {
+          console.error(
+            "Profile API error:",
+            response.status,
+            response.statusText
+          );
+          setError("Failed to fetch profile data");
+        }
+      } catch (error) {
+        console.error("Fetch profile error:", error);
+        setError("Error fetching profile data");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500">{error}</div>;
+  }
+
   return (
     <div className="relative pb-10">
       {/* Racing Flag Background */}
@@ -50,8 +96,12 @@ const BookingForm: NextPage = () => {
                 <label className="block text-sm font-semibold text-gray-800 mb-1">
                   Name
                 </label>
-                <div className="p-3 border border-gray-300 rounded-xl">
-                  John Doe
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder={"John"}
+                    className="p-3 border border-gray-300 rounded-xl w-full"
+                  />
                 </div>
               </div>
               <div>
@@ -59,9 +109,11 @@ const BookingForm: NextPage = () => {
                   Phone Number
                 </label>
                 <div className="relative">
-                  <div className="p-3 border border-gray-300 rounded-xl">
-                    +41 0000 0000
-                  </div>
+                  <input
+                    type="tel"
+                    placeholder={"+41768225204"}
+                    className="p-3 border border-gray-300 rounded-xl w-full"
+                  />
                   <PhoneIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
                 </div>
               </div>
@@ -74,9 +126,11 @@ const BookingForm: NextPage = () => {
                   Pick-Up
                 </label>
                 <div className="relative">
-                  <div className="p-3 border border-gray-300 rounded-xl">
-                    Zürich Hauptbahnhof (Main Train Station)
-                  </div>
+                  <input
+                    type="text"
+                    placeholder="Zürich Hauptbahnhof (Main Train Station)"
+                    className="p-3 border border-gray-300 rounded-xl w-full"
+                  />
                   <LocationIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
                 </div>
               </div>
@@ -85,9 +139,11 @@ const BookingForm: NextPage = () => {
                   Drop-Off Location
                 </label>
                 <div className="relative">
-                  <div className="p-3 border border-gray-300 rounded-xl">
-                    Zürich Airport (ZRH)
-                  </div>
+                  <input
+                    type="text"
+                    placeholder="Zürich Airport (ZRH)"
+                    className="p-3 border border-gray-300 rounded-xl w-full"
+                  />
                   <DirectionIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
                 </div>
               </div>
@@ -104,8 +160,8 @@ const BookingForm: NextPage = () => {
                   <div className="relative">
                     <input
                       type="text"
-                      className="p-3 pr-12 font-medium border border-gray-300 rounded-xl w-full"
                       placeholder="e.g., 10 July, 9:00 AM"
+                      className="p-3 pr-12 font-medium border border-gray-300 rounded-xl w-full"
                     />
                     <CalendarIcon className="w-5 h-5 text-yellow-500 absolute right-3 top-1/2 -translate-y-1/2" />
                   </div>
@@ -139,7 +195,7 @@ const BookingForm: NextPage = () => {
                     alt="Taxi Icon"
                     width={24}
                     height={24}
-                    className="h-5 w-auto"
+                    className="h-6 w-6"
                   />
                 </button>
               </div>
@@ -149,6 +205,4 @@ const BookingForm: NextPage = () => {
       </div>
     </div>
   );
-};
-
-export default BookingForm;
+}

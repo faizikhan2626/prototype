@@ -20,8 +20,18 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    // Add these for Prisma compatibility
+    "types": ["node", "@types/node"],
+    "baseUrl": "."
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    // Include Prisma client
+    "prisma/**/*", "scripts/**/*"
+  ],
   "exclude": ["node_modules"]
 }
